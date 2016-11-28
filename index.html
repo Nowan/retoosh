@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>retoosh</title>
+    <style>* { padding: 0; margin: 0; }</style>
+    <script src="js/phaser.min.js"></script>
+</head>
+<body>
+<script>
+    var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {
+        preload: preload, create: create, update: update
+    });
+
+    var ball;
+    var spaceship;
+
+    function preload() {
+        game.scale.scaleMode = Phaser.scaleModes.SHOW_ALL;
+        game.scale.pageAlignVertically = true;
+        game.scale.pageAlignHorizontally = true;
+
+        game.stage.backgroundColor = '#eee';
+
+        game.load.image('ball','img/ball.png');
+        game.load.image('spaceship', 'img/spaceship.png')
+    }
+    function create() {
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        ball = game.add.sprite(50, 50, 'ball');
+        game.physics.enable(ball, Phaser.Physics.ARCADE);
+        ball.body.velocity.set(150,150);
+        ball.body.collideWorldBounds = true;
+        ball.body.bounce.set(1);
+
+        spaceship = game.add.sprite(game.world.width * 0.5, game.world.height * 0.5, 'spaceship');
+        game.physics.enable(spaceship, Phaser.Physics.ARCADE);
+        spaceship.anchor.set(0.5, 0.5);
+
+        spaceship.body.collideWorldBounds = true;
+        spaceship.body.immovable = true;
+    }
+    function update() {
+        game.physics.arcade.collide(ball, spaceship);
+
+        spaceship.x = game.input.x || game.world.width * 0.5;
+        spaceship.y = game.input.y || game.world.height * 0.5;
+        
+    }
+</script>
+</body>
+</html>
