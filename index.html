@@ -17,12 +17,12 @@
 <body>
 <script>
     (function () {
-        var game = new Phaser.Game(Screen.WIDTH, Screen.HEIGHT, Phaser.CANVAS, 'game');
-        game.state.add('Boot', Screen.Boot);
-        game.state.add('Preloader', Screen.Preloader);
-        game.state.add('MainMenu', Screen.MainMenu);
-        game.state.add('Howto', Screen.Howto);
-        game.state.add('Game', Screen.Game);
+        var game = new Phaser.Game(Retoosh.WIDTH, Retoosh.HEIGHT, Phaser.CANVAS, 'game');
+        game.state.add('Boot', Retoosh.Boot);
+        game.state.add('Preloader', Retoosh.Preloader);
+        game.state.add('MainMenu', Retoosh.MainMenu);
+        game.state.add('Howto', Retoosh.Howto);
+        game.state.add('Game', Retoosh.Game);
         game.state.start('Boot');
     })();
 </script>

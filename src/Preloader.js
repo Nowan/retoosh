@@ -1,6 +1,6 @@
-Screen.Preloader = function (game) { };
+Retoosh.Preloader = function (game) { };
 
-Screen.Preloader.prototype = {
+Retoosh.Preloader.prototype = {
   preload: function () {
       this.game.stage.backgroundColor = '#eee';
 
@@ -14,6 +14,8 @@ Screen.Preloader.prototype = {
       this.game.load.image('screen-howtoplay', 'img/screen-howtoplay.png');
 
       this.game.load.spritesheet('button-start', 'img/button-start.png', 146, 51);
+
+      this.game.load.image('bullet', 'img/bullet.png');
   },
   create: function () {
       this.game.state.start('MainMenu');

@@ -1,10 +1,10 @@
-var Screen = {
+var Retoosh = {
     WIDTH: 800,
     HEIGHT: 600
 };
 
-Screen.Boot = function (game) { };
-Screen.Boot.prototype = {
+Retoosh.Boot = function (game) { };
+Retoosh.Boot.prototype = {
   preload: function () {
 
   },
