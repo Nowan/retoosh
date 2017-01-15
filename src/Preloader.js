@@ -6,7 +6,9 @@ Retoosh.Preloader.prototype = {
 
       this.game.load.image('background', 'img/Space.png');
 
-      this.game.load.image('enemy', 'img/enemy.png');
+      this.game.load.image('easyenemy', 'img/easyEnemy.png');
+      this.game.load.image('mediumenemy', 'img/mediumEnemy.png');
+      this.game.load.image('hardenemy', 'img/hardEnemy.png');
       this.game.load.image('ball','img/ball.png');
       this.game.load.image('spaceship', 'img/spaceship.png');
 
