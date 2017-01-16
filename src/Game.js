@@ -12,7 +12,8 @@ Retoosh.Game = function(game) {
     this.currentFormation = 0;
 };
 
-
+var score = 0;
+var life = 100;
 Retoosh.Game.prototype = {
 
     create: function() {
@@ -26,9 +27,10 @@ Retoosh.Game.prototype = {
 
         this.background.autoScroll(-40, 0);
         var playerName = this.game.cache.getText('name');
-        score = 0;
+
         playerNameText=this.game.add.text(10, 10, playerName, { font: '40px Phosphate', fill: '#ffffff' });
         scoreText = this.game.add.text(playerNameText._width + 25, 10, 'score: 0', { font: '40px Phosphate', fill: '#ffffff' });
+        lifeText = this.game.add.text(Retoosh.WIDTH - 200, 10, 'Life: '+ life, { font: '40px Phosphate', fill: '#ffffff' });
 
         this.game.add.text(100, Retoosh.HEIGHT - 30, 'Move: Mouse', { font: '20px Phosphate', fill: '#ffffff' });
         this.game.add.text(300, Retoosh.HEIGHT - 30, 'Fire: Spacebar', { font: '20px Phosphate', fill: '#ffffff' });
@@ -77,14 +79,20 @@ Retoosh.Game.prototype = {
             this.weapons[this.currentWeapon].fire(this.spaceship);
         }
 
-
+        if(life <=0)
+        {
+            this.game.state.start('GameOver');
+            console.log('GAME OVER');
+        }
     },
- 
+
+
     enemyHitPlayer: function (spaceship, enemy) {
         enemy.kill();
 
         score -= 100;
         scoreText.setText('score: ' + score);
+        loseLife();
     },
 
     playerKillEnemy: function (enemy, weapon) {
@@ -112,5 +120,11 @@ Retoosh.Game.prototype = {
 
         this.weapons[this.currentWeapon].visible = true;
 
-    }
+    },
+
+
 };
+function loseLife() {
+    life -= 5;
+    lifeText.setText('Life: ' + life);
+}

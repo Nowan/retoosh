@@ -17,6 +17,8 @@
     <script src="src/game/Weapon.js"></script>
     <script src="src/game/Enemy.js"></script>
     <script src="src/game/Scenario.js"></script>
+    <script src="src/GameOver.js"></script>
+
 </head>
 <body>
 <script>
@@ -27,6 +29,7 @@
         game.state.add('MainMenu', Retoosh.MainMenu);
         game.state.add('Howto', Retoosh.Howto);
         game.state.add('Game', Retoosh.Game);
+        game.state.add('GameOver', Retoosh.GameOver);
         game.state.start('Boot');
     })();
 </script>

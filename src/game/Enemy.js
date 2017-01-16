@@ -1,11 +1,12 @@
 var Formations = {};
-
+var noEnemies = (Retoosh.HEIGHT)/60;
+var diff = (Retoosh.HEIGHT -40)/noEnemies - 10;
 Formations.FlyingWedge = function (game){
 
     Phaser.Group.call(this, game, game.world, 'Flying Wedge', false, true, Phaser.Physics.ARCADE);
 
-    var noEnemies = Retoosh.HEIGHT/60;
-    var diff = Retoosh.HEIGHT/noEnemies - 10;
+  //  var noEnemies = Retoosh.HEIGHT/60;
+   // var diff = Retoosh.HEIGHT/noEnemies - 10;
 
     for (var i = 2; i < 6; i++)
     {
@@ -27,11 +28,11 @@ Formations.Line = function (game){
 
     Phaser.Group.call(this, game, game.world, 'Line', false, true, Phaser.Physics.ARCADE);
 
-    var noEnemies = Retoosh.HEIGHT/60;
-    var diff = Retoosh.HEIGHT/noEnemies - 10;
+    //var noEnemies = Retoosh.HEIGHT/60;
+    //var diff = Retoosh.HEIGHT/noEnemies - 10;
 
     for (var j = 0; j < noEnemies; j++){
-        this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80, diff + diff*j), true);
+        this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80, diff + 60 + diff*j), true);
     }
 
     return this;
@@ -46,13 +47,13 @@ Formations.Square = function (game){
 
     Phaser.Group.call(this, game, game.world, 'Square', false, true, Phaser.Physics.ARCADE);
 
-    var noEnemies = Retoosh.HEIGHT/60;
-    var diff = Retoosh.HEIGHT/noEnemies - 10;
+     //var noEnemies = Retoosh.HEIGHT/60;
+    //var diff = Retoosh.HEIGHT/noEnemies - 10;
 
     for (var i = 0; i < 4; i++)
     {
         for (var j = 0; j < noEnemies; j++){
-            this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80 - i*65, diff + diff*j), true);
+            this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80 - i*65, diff +60+ diff*j), true);
         }
     }
 
