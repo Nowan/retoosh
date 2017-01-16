@@ -12,8 +12,6 @@ Retoosh.Game = function(game) {
     this.currentFormation = 0;
 };
 
-var score = 0;
-var life = 100;
 Retoosh.Game.prototype = {
 
     create: function() {
@@ -27,9 +25,10 @@ Retoosh.Game.prototype = {
 
         this.background.autoScroll(-40, 0);
         var playerName = this.game.cache.getText('name');
-
+        score =0;
+        life = 100;
         playerNameText=this.game.add.text(10, 10, playerName, { font: '40px Phosphate', fill: '#ffffff' });
-        scoreText = this.game.add.text(playerNameText._width + 25, 10, 'score: 0', { font: '40px Phosphate', fill: '#ffffff' });
+        scoreText = this.game.add.text(playerNameText._width + 25, 10, 'score: '+ score, { font: '40px Phosphate', fill: '#ffffff' });
         lifeText = this.game.add.text(Retoosh.WIDTH - 200, 10, 'Life: '+ life, { font: '40px Phosphate', fill: '#ffffff' });
 
         this.game.add.text(100, Retoosh.HEIGHT - 30, 'Move: Mouse', { font: '20px Phosphate', fill: '#ffffff' });
@@ -43,6 +42,7 @@ Retoosh.Game.prototype = {
         this.spaceship.body.collideWorldBounds = true;
         this.spaceship.body.immovable = true;
 
+        this.weapons=[];
         this.weapons.push(new Weapon.SingleBullet(this.game));
         this.weapons.push(new Weapon.FrontAndBack(this.game));
 
