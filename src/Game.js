@@ -25,9 +25,10 @@ Retoosh.Game.prototype = {
         this.background = this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'background');
 
         this.background.autoScroll(-40, 0);
-
+        var playerName = this.game.cache.getText('name');
         score = 0;
-        scoreText = this.game.add.text(10, 10, 'Score: 0', { font: '40px Phosphate', fill: '#ffffff' });
+        playerNameText=this.game.add.text(10, 10, playerName, { font: '40px Phosphate', fill: '#ffffff' });
+        scoreText = this.game.add.text(playerNameText._width + 25, 10, 'score: 0', { font: '40px Phosphate', fill: '#ffffff' });
 
         this.game.add.text(100, Retoosh.HEIGHT - 30, 'Move: Mouse', { font: '20px Phosphate', fill: '#ffffff' });
         this.game.add.text(300, Retoosh.HEIGHT - 30, 'Fire: Spacebar', { font: '20px Phosphate', fill: '#ffffff' });
@@ -72,7 +73,7 @@ Retoosh.Game.prototype = {
         this.spaceship.x = this.game.input.x || this.game.world.width * 0.5;
         this.spaceship.y = this.game.input.y || this.game.world.height * 0.5;
 
-        if (this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+        if (this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || this.input.activePointer.leftButton.isDown) {
             this.weapons[this.currentWeapon].fire(this.spaceship);
         }
 
@@ -83,7 +84,7 @@ Retoosh.Game.prototype = {
         enemy.kill();
 
         score -= 100;
-        scoreText.setText('Score: ' + score);
+        scoreText.setText('score: ' + score);
     },
 
     playerKillEnemy: function (enemy, weapon) {
@@ -92,7 +93,7 @@ Retoosh.Game.prototype = {
         weapon.kill();
 
         score += 100;
-        scoreText.setText('Score: ' + score);
+        scoreText.setText('score: ' + score);
     },
 
     nextWeapon: function () {
