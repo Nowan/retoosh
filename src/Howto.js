@@ -4,11 +4,14 @@ Retoosh.Howto.prototype = {
     create: function() {
         this.myInput = this.createInput(Retoosh.WIDTH * 0.5 - 175, Retoosh.HEIGHT * 0.5 +100);
         this.buttonContinue = this.add.button(Retoosh.WIDTH * 0.5 - 200, Retoosh.HEIGHT * 0.5 - 100, 'screen-howtoplay', this.startGame, this);
+        if(this.game.cache.getText('name') != null)
+        {
+            this.myInput.canvasInput.value(this.game.cache.getText('name'));
+        }
         var enterKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         enterKey.onDown.add(this.startGame, this);
     },
     startGame: function() {
-       // console.log(this.myInput.canvasInput._value);
         var name = this.myInput.canvasInput._value;
         if(name == DEFAULT_VALUE || name.trim()=="")
         {
