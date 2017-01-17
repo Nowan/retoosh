@@ -1,19 +1,26 @@
 var Formations = {};
-var noEnemies = (Retoosh.HEIGHT)/60;
-var diff = (Retoosh.HEIGHT -40)/noEnemies - 10;
+
+Formations.noEnemies = (Retoosh.HEIGHT)/60;
+Formations.diff = (Retoosh.HEIGHT -40)/Formations.noEnemies - 10;
+
 Formations.FlyingWedge = function (game){
 
     Phaser.Group.call(this, game, game.world, 'Flying Wedge', false, true, Phaser.Physics.ARCADE);
 
-  //  var noEnemies = Retoosh.HEIGHT/60;
-   // var diff = Retoosh.HEIGHT/noEnemies - 10;
-
     for (var i = 2; i < 6; i++)
     {
-        for (var j = 0; j < noEnemies/i; j++){
-            this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT/2 + diff*j), true);
+        for (var j = 0; j < Formations.noEnemies/i; j++){
+
+            var enemyDown = new Enemies.Easy(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT/2 + Formations.diff*j);
+            enemyDown.addBehaviour(new Behaviours.UpAndDown);
+            enemyDown.addBehaviour(new Behaviours.MoveForward);
+            this.add(enemyDown, true);
+
             if(j != 0) {
-                this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT / 2 - diff * j), true);
+                var enemyUp = new Enemies.Easy(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT / 2 - Formations.diff * j);
+                enemyUp.addBehaviour(new Behaviours.UpAndDown());
+                enemyUp.addBehaviour(new Behaviours.MoveForward);
+                this.add(enemyUp, true);
             }
         }
     }
@@ -28,15 +35,15 @@ Formations.Line = function (game){
 
     Phaser.Group.call(this, game, game.world, 'Line', false, true, Phaser.Physics.ARCADE);
 
-    //var noEnemies = Retoosh.HEIGHT/60;
-    //var diff = Retoosh.HEIGHT/noEnemies - 10;
+    for (var j = 1; j <= Formations.noEnemies; j++){
 
-    for (var j = 0; j < noEnemies; j++){
-        this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80, diff + 60 + diff*j), true);
+        var enemy = new Enemies.Easy(game, Retoosh.WIDTH - 80, Formations.diff * j + 60);
+        enemy.addBehaviour(new Behaviours.MoveForward);
+
+        this.add(enemy, true);
     }
 
     return this;
-
 };
 
 Formations.Line.prototype = Object.create(Phaser.Group.prototype);
@@ -47,13 +54,13 @@ Formations.Square = function (game){
 
     Phaser.Group.call(this, game, game.world, 'Square', false, true, Phaser.Physics.ARCADE);
 
-     //var noEnemies = Retoosh.HEIGHT/60;
-    //var diff = Retoosh.HEIGHT/noEnemies - 10;
-
     for (var i = 0; i < 4; i++)
     {
-        for (var j = 0; j < noEnemies; j++){
-            this.add(new Enemies.Easy(game, Retoosh.WIDTH - 80 - i*65, diff +60+ diff*j), true);
+        for (var j = 1; j <= Formations.noEnemies; j++){
+            var enemy = new Enemies.Easy(game, Retoosh.WIDTH - 80 - i*65, Formations.diff*j + 60);
+            enemy.addBehaviour(new Behaviours.UpAndDown);
+
+            this.add(enemy, true);
         }
     }
 
@@ -74,18 +81,21 @@ Enemy = function (game, key, x, y) {
     this.scaleSpeed = 0;
     this.exists = false;
 
+    this.behaviours = [];
+
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
-Enemy.prototype.showOnScreen = function (angle, speed, scale) {
+Enemy.prototype.addBehaviour = function (behaviour) {
+    this.behaviours.push(behaviour);
+};
 
-    this.scale.setTo(scale, scale);
-    this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
-    this.body.collideWorldBounds = false;
-    this.exists = true;
-
+Enemy.prototype.doBehave = function () {
+    for (var i =0; i < this.behaviours.length; i++){
+        this.behaviours[i].behave(this);
+    }
 };
 
 
@@ -112,3 +122,59 @@ Enemies.Hard = function (game, x, y) {
 
 Enemies.Hard.prototype = Object.create(Enemy.prototype);
 Enemies.Hard.prototype.constructor = Enemies.Hard;
+
+
+Behaviours = function () {};
+
+Behaviours.prototype.constructor = Behaviours;
+
+Behaviours.prototype.behave = function (object) { };
+
+Behaviours.UpAndDown = function () {
+    Behaviours.call(this);
+    this.currentChange = 0;
+    this.currentDifference = 0.8;
+};
+
+Behaviours.UpAndDown.prototype = Object.create(Behaviours.prototype);
+Behaviours.UpAndDown.prototype.constructor = Behaviours.UpAndDown;
+
+Behaviours.UpAndDown.prototype.behave = function (object) {
+    if(this.currentChange == 50){
+        this.currentDifference *= -1;
+        this.currentChange = 0;
+    }
+
+    this.currentChange += 1;
+    object.y += this.currentDifference;
+};
+
+Behaviours.MoveForward = function () {
+    Behaviours.call(this);
+};
+
+Behaviours.MoveForward.prototype = Object.create(Behaviours.prototype);
+Behaviours.MoveForward.prototype.constructor = Behaviours.MoveForward;
+
+Behaviours.MoveForward.prototype.behave = function (object) {
+    object.x -= 2;
+
+    if(object.x < 0){
+        object.destroy();
+    }
+};
+
+Behaviours.Chaotic = function () {
+    Behaviours.call(this);
+};
+
+Behaviours.Chaotic.prototype = Object.create(Behaviours.prototype);
+Behaviours.Chaotic.prototype.constructor = Behaviours.Chaotic;
+
+Behaviours.Chaotic.prototype.behave = function (object) {
+
+    var randomValue = Math.floor(Math.random() * (5 + 5 + 1)) - 5;
+    console.log(randomValue);
+    object.y += randomValue;
+};
+

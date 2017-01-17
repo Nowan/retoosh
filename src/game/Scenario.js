@@ -26,6 +26,7 @@ Scenario.prototype.startCurrentStage = function () {
 Scenario.prototype.closeCurrentStage = function () {
     this.stages[this.currentStage].visible = false;
     this.stages[this.currentStage].setAll('exists', false);
+    this.stages[this.currentStage].callAll('destroy');
 };
 
 Scenario.prototype.updateScenario = function () {
@@ -40,9 +41,17 @@ Scenario.prototype.updateScenario = function () {
         this.closeCurrentStage();
 
         this.currentStage++;
-        this.currentStage = this.currentStage % this.stages.length;
 
-        this.startCurrentStage();
+        if(this.currentStage == this.stages.length){
+            // TO DO ---> add end screen
+        }
+        else{
+            this.startCurrentStage();
+        }
+
+    }
+    else {
+        this.stages[this.currentStage].callAll('doBehave');
     }
 };
 

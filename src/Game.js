@@ -7,18 +7,14 @@ Retoosh.Game = function(game) {
 
     this.weapons = [];
     this.currentWeapon = 0;
-
-    this.formattions = [];
-    this.currentFormation = 0;
 };
-var score =0;
+
+var score = 0;
 var hp = 100;
+
 Retoosh.Game.prototype = {
 
     create: function() {
-
-        previousTimestamp = new Date();
-        currentTimestamp = new Date();
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -43,13 +39,12 @@ Retoosh.Game.prototype = {
         this.spaceship.body.collideWorldBounds = true;
         this.spaceship.body.immovable = true;
 
-        this.weapons=[];
         this.weapons.push(new Weapon.SingleBullet(this.game));
         this.weapons.push(new Weapon.FrontAndBack(this.game));
 
         scenario = new Scenario();
-        scenario.addStage(new Formations.Square(this.game));
         scenario.addStage(new Formations.Line(this.game));
+        scenario.addStage(new Formations.Square(this.game));
         scenario.addStage(new Formations.FlyingWedge(this.game));
 
 
@@ -66,7 +61,6 @@ Retoosh.Game.prototype = {
     },
 
     update: function() {
-        currentTimestamp = new Date();
 
         this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), this.enemyHitPlayer, null, null);
         this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], this.playerKillEnemy, null, null);
@@ -89,9 +83,9 @@ Retoosh.Game.prototype = {
 
 
     enemyHitPlayer: function (spaceship, enemy) {
+
         enemy.kill();
 
-        score -= 100;
         scoreText.setText('score: ' + score);
         loseLife();
     },
@@ -107,24 +101,20 @@ Retoosh.Game.prototype = {
 
     nextWeapon: function () {
 
-
         this.weapons[this.currentWeapon].visible = false;
         this.weapons[this.currentWeapon].callAll('reset', null, 0, 0);
         this.weapons[this.currentWeapon].setAll('exists', false);
 
         this.currentWeapon++;
 
-        if (this.currentWeapon === this.weapons.length)
-        {
+        if (this.currentWeapon === this.weapons.length) {
             this.currentWeapon = 0;
         }
 
         this.weapons[this.currentWeapon].visible = true;
-
-    },
-
-
+    }
 };
+
 function loseLife() {
     hp -= 5;
     hpTest.setText('Life: ' + hp);
