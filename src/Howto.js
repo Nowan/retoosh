@@ -4,7 +4,7 @@ Retoosh.Howto.prototype = {
     create: function() {
         this.myInput = this.createInput(Retoosh.WIDTH * 0.5 - 175, Retoosh.HEIGHT * 0.5 +100);
         this.buttonContinue = this.add.button(Retoosh.WIDTH * 0.5 - 200, Retoosh.HEIGHT * 0.5 - 100, 'screen-howtoplay', this.startGame, this);
-        if(this.game.cache.getText('name') != null)
+        if(this.game.cache.checkTextKey('name'))
         {
             this.myInput.canvasInput.value(this.game.cache.getText('name'));
         }
