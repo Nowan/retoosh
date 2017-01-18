@@ -29,7 +29,7 @@ Scenario.prototype.closeCurrentStage = function () {
     this.stages[this.currentStage].callAll('destroy');
 };
 
-Scenario.prototype.updateScenario = function () {
+Scenario.prototype.updateScenario = function (game) {
     var isEnemyLeft = false;
     this.stages[this.currentStage].forEach(
         function(enemy) {
@@ -44,6 +44,7 @@ Scenario.prototype.updateScenario = function () {
 
         if(this.currentStage == this.stages.length){
             // TO DO ---> add end screen
+            GameOver(game);
         }
         else{
             this.startCurrentStage();
