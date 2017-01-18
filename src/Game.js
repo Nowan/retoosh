@@ -69,7 +69,6 @@ Retoosh.Game.prototype = {
 
         this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), this.enemyHitPlayer, null, null);
         this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], this.playerKillEnemy, null, null);
-        //
         scenario.updateScenario(this.game);
 
         this.spaceship.x = this.game.input.x || this.game.world.width * 0.5;

@@ -44,7 +44,6 @@ Scenario.prototype.updateScenario = function (game) {
 
         if(this.currentStage == this.stages.length){
             // TO DO ---> add end screen
-            //add boss
             GameOver(game);
         }
         else{
