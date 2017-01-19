@@ -18,6 +18,12 @@ function GameOver(game) {
 }
 Retoosh.Game.prototype = {
 
+    preload: function() {
+        this.game.load.audio('laser_1', 'assets/sounds/laser_1.wav');
+        this.game.load.audio('laser_2', 'assets/sounds/laser_2.wav');
+        this.game.load.audio('explosion', 'assets/sounds/explosion.wav');
+    },
+
     create: function() {
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -66,9 +72,14 @@ Retoosh.Game.prototype = {
     },
 
     update: function() {
+        var link = this;
 
         this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), this.enemyHitPlayer, null, null);
-        this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], this.playerKillEnemy, null, null);
+        
+        var beamColliderCallback = function(obj1, obj2) { 
+            link.playerKillEnemy(link.game, obj1, obj2); 
+        }
+        this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
         scenario.updateScenario(this.game);
 
         this.spaceship.x = this.game.input.x || this.game.world.width * 0.5;
@@ -93,11 +104,17 @@ Retoosh.Game.prototype = {
         loseLife();
     },
 
-    playerKillEnemy: function (enemy, weapon) {
+    playerKillEnemy: function (game, enemy, weapon) {
 
         enemy.kill();
         weapon.kill();
 
+        // play explosion sound with slight change of rate and volume
+        var explosion_sound = this.game.add.audio('explosion');
+        explosion_sound.volume = game.rnd.realInRange(0.4,1);
+        explosion_sound.play();
+        explosion_sound._sound.playbackRate.value = game.rnd.realInRange(0.85,1.15);
+        
         score += 100;
         scoreText.setText('score: ' + score);
     },
