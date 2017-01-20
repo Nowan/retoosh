@@ -33,14 +33,14 @@ Retoosh.Game.prototype = {
         this.parallax[1].autoScroll(-150, 0);
         this.parallax[2].autoScroll(-180, 0);
 
-        // ui
-        stats_panel = new StatsPanel(this.game);
-
+        // global params
         var playerName = this.game.cache.getText('name');
         score = 0;
         hp = 100;
-        playerNameText=this.game.add.text(10, 10, playerName, { font: '40px Phosphate', fill: '#ffffff' });
-        scoreText = this.game.add.text(playerNameText._width + 25, 10, 'score: '+ score, { font: '40px Phosphate', fill: '#ffffff' });
+        
+        // ui
+        stats_panel = new StatsPanel(this.game);
+        score_panel = new ScorePanel(this.game, playerName);
 
         this.game.add.text(100, Retoosh.HEIGHT - 30, 'Move: Mouse', { font: '20px Phosphate', fill: '#ffffff' });
         this.game.add.text(300, Retoosh.HEIGHT - 30, 'Fire: Spacebar', { font: '20px Phosphate', fill: '#ffffff' });
@@ -104,7 +104,7 @@ Retoosh.Game.prototype = {
 
         enemy.kill();
 
-        scoreText.setText('score: ' + score);
+        score_panel.updateScoreIndicator( score );
         loseLife();
     },
 
@@ -120,7 +120,7 @@ Retoosh.Game.prototype = {
         explosion_sound._sound.playbackRate.value = game.rnd.realInRange(0.85,1.15);
         
         score += 100;
-        scoreText.setText('score: ' + score);
+        score_panel.updateScoreIndicator( score );
     },
 
     nextWeapon: function () {

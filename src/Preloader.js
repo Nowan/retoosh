@@ -18,7 +18,8 @@ Retoosh.Preloader.prototype = {
       this.game.load.image('parallax_3', 'assets/textures/parallax/parallax_3.png');
 
       // in-game ui
-      this.game.load.image('panel_left', 'assets/textures/ui_panel/panel.png');
+      this.game.load.image('panel_left', 'assets/textures/ui_panel/panel_left.png');
+      this.game.load.image('panel_right', 'assets/textures/ui_panel/panel_right.png');
       this.game.load.image('life_indicator', 'assets/textures/ui_panel/life_indicator.png');
       this.game.load.image('life_segment', 'assets/textures/ui_panel/life_segment.png');
       this.game.load.image('energy_indicator', 'assets/textures/ui_panel/energy_indicator.png');
