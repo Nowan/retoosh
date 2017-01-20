@@ -22,6 +22,7 @@ Retoosh.Game.prototype = {
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+        // parallax background
         this.parallax = [
             this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_1'),
             this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_2'),
@@ -32,8 +33,11 @@ Retoosh.Game.prototype = {
         this.parallax[1].autoScroll(-150, 0);
         this.parallax[2].autoScroll(-180, 0);
 
+        // ui
+        this.stats_panel = new StatsPanel(this.game);
+
         var playerName = this.game.cache.getText('name');
-        score =0;
+        score = 0;
         hp = 100;
         playerNameText=this.game.add.text(10, 10, playerName, { font: '40px Phosphate', fill: '#ffffff' });
         scoreText = this.game.add.text(playerNameText._width + 25, 10, 'score: '+ score, { font: '40px Phosphate', fill: '#ffffff' });
