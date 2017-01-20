@@ -27,6 +27,14 @@ Retoosh.Preloader.prototype = {
       this.game.load.image('upgrade_indicator', 'assets/textures/ui_panel/upgrade_indicator.png');
       this.game.load.image('upgrade_segment', 'assets/textures/ui_panel/upgrade_segment.png');
 
+      // main menu textures
+      this.game.load.image('logo', 'assets/textures/main_menu/logo.png');
+      this.game.load.image('main_panel_top', 'assets/textures/main_menu/panel_top.png');
+      this.game.load.image('main_panel_bottom', 'assets/textures/main_menu/panel_bottom.png');
+      this.game.load.spritesheet('main_panel_newgame', 'assets/textures/main_menu/panel_newgame.png', 533, 79);
+      this.game.load.spritesheet('main_panel_settings', 'assets/textures/main_menu/panel_settings.png', 533, 88);
+      this.game.load.spritesheet('main_panel_credits', 'assets/textures/main_menu/panel_credits.png', 533, 78);
+
       this.game.load.image('easyenemy', 'img/easyEnemy.png');
       this.game.load.image('mediumenemy', 'img/mediumEnemy.png');
       this.game.load.image('hardenemy', 'img/hardEnemy.png');
