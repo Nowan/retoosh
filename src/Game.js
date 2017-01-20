@@ -22,9 +22,16 @@ Retoosh.Game.prototype = {
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        this.background = this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'background');
+        this.parallax = [
+            this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_1'),
+            this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_2'),
+            this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_3')
+        ];
 
-        this.background.autoScroll(-40, 0);
+        this.parallax[0].autoScroll(-80, 0);
+        this.parallax[1].autoScroll(-150, 0);
+        this.parallax[2].autoScroll(-180, 0);
+
         var playerName = this.game.cache.getText('name');
         score =0;
         hp = 100;

@@ -4,11 +4,18 @@ Retoosh.Preloader.prototype = {
   preload: function () {
       this.game.stage.backgroundColor = '#eee';
 
+      // long-duration audio
       this.game.load.audio('maintheme', 'assets/music/space_trip.mp3');
 
+      // sound effects 
       this.game.load.audio('laser_1', 'assets/sounds/laser_1.wav');
       this.game.load.audio('laser_2', 'assets/sounds/laser_2.wav');
       this.game.load.audio('explosion', 'assets/sounds/explosion.wav');
+
+      // parallax background
+      this.game.load.image('parallax_1', 'assets/textures/parallax/parallax_1.png');
+      this.game.load.image('parallax_2', 'assets/textures/parallax/parallax_2.png');
+      this.game.load.image('parallax_3', 'assets/textures/parallax/parallax_3.png');
 
       this.game.load.image('background', 'img/Space.png');
 
