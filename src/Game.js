@@ -14,8 +14,8 @@ var hp = 100;
 
 function GameOver(game) {
     game.state.start('GameOver');
-    console.log('GAME OVER');
 }
+
 Retoosh.Game.prototype = {
 
     create: function() {
@@ -78,12 +78,13 @@ Retoosh.Game.prototype = {
     update: function() {
         var link = this;
 
+        var beamColliderCallback = function(obj1, obj2) {
+            link.playerKillEnemy(link.game, obj1, obj2);
+        };
+
         this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), this.enemyHitPlayer, null, null);
-        
-        var beamColliderCallback = function(obj1, obj2) { 
-            link.playerKillEnemy(link.game, obj1, obj2); 
-        }
         this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
+
         scenario.updateScenario(this.game);
 
         this.spaceship.x = this.game.input.x || this.game.world.width * 0.5;
@@ -93,12 +94,10 @@ Retoosh.Game.prototype = {
             this.weapons[this.currentWeapon].fire(this.spaceship);
         }
 
-        if(hp <=0)
-        {
+        if(hp <=0) {
             GameOver(this.game);
         }
     },
-
 
     enemyHitPlayer: function (spaceship, enemy) {
 

@@ -1,7 +1,7 @@
 var Formations = {};
 
-Formations.noEnemies = (Retoosh.HEIGHT)/60;
-Formations.diff = (Retoosh.HEIGHT -40)/Formations.noEnemies - 10;
+Formations.noEnemies = (Retoosh.HEIGHT)/70;
+Formations.diff = (Retoosh.HEIGHT - 20)/Formations.noEnemies;
 
 Formations.FlyingWedge = function (game){
 
@@ -11,13 +11,13 @@ Formations.FlyingWedge = function (game){
     {
         for (var j = 0; j < Formations.noEnemies/i; j++){
 
-            var enemyDown = new Enemies.Easy(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT/2 + Formations.diff*j);
+            var enemyDown = new Enemies.Medium(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT/2 + Formations.diff*j);
             enemyDown.addBehaviour(new Behaviours.UpAndDown);
             enemyDown.addBehaviour(new Behaviours.MoveForward);
             this.add(enemyDown, true);
 
             if(j != 0) {
-                var enemyUp = new Enemies.Easy(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT / 2 - Formations.diff * j);
+                var enemyUp = new Enemies.Medium(game, Retoosh.WIDTH - 80 - (i - 2) * 65, Retoosh.HEIGHT / 2 - Formations.diff * j);
                 enemyUp.addBehaviour(new Behaviours.UpAndDown());
                 enemyUp.addBehaviour(new Behaviours.MoveForward);
                 this.add(enemyUp, true);
@@ -37,7 +37,7 @@ Formations.Line = function (game){
 
     for (var j = 1; j <= Formations.noEnemies; j++){
 
-        var enemy = new Enemies.Easy(game, Retoosh.WIDTH - 80, Formations.diff * j + 60);
+        var enemy = new Enemies.Hard(game, Retoosh.WIDTH - 80, Formations.diff * j + Retoosh.STATS_PANEL_HEIGHT);
         enemy.addBehaviour(new Behaviours.MoveForward);
 
         this.add(enemy, true);
@@ -57,9 +57,8 @@ Formations.Square = function (game){
     for (var i = 0; i < 4; i++)
     {
         for (var j = 1; j <= Formations.noEnemies; j++){
-            var enemy = new Enemies.Easy(game, Retoosh.WIDTH - 80 - i*65, Formations.diff*j + 60);
+            var enemy = new Enemies.Easy(game, Retoosh.WIDTH - 80 - i*65, Formations.diff*j + Retoosh.STATS_PANEL_HEIGHT);
             enemy.addBehaviour(new Behaviours.UpAndDown);
-
             this.add(enemy, true);
         }
     }
@@ -117,7 +116,7 @@ Enemies.Medium.prototype = Object.create(Enemy.prototype);
 Enemies.Medium.prototype.constructor = Enemies.Medium;
 
 Enemies.Hard = function (game, x, y) {
-    Enemy.call(this, game, 'easyenemy', x, y);
+    Enemy.call(this, game, 'hardenemy', x, y);
 };
 
 Enemies.Hard.prototype = Object.create(Enemy.prototype);

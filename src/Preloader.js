@@ -35,19 +35,15 @@ Retoosh.Preloader.prototype = {
       this.game.load.spritesheet('main_panel_settings', 'assets/textures/main_menu/panel_settings.png', 533, 88);
       this.game.load.spritesheet('main_panel_credits', 'assets/textures/main_menu/panel_credits.png', 533, 78);
 
-      this.game.load.image('easyenemy', 'img/easyEnemy.png');
-      this.game.load.image('mediumenemy', 'img/mediumEnemy.png');
-      this.game.load.image('hardenemy', 'img/hardEnemy.png');
-      this.game.load.image('ball','img/ball.png');
-      this.game.load.image('spaceship', 'img/spaceship.png');
+      this.game.load.image('easyenemy', 'assets/textures/ship/ms1_hull.png');
+      this.game.load.image('mediumenemy', 'assets/textures/ship/ms2_hull.png');
+      this.game.load.image('hardenemy', 'assets/textures/ship/ss1_hull.png');
 
-      this.game.load.image('title', 'img/title.png');
+      this.game.load.image('spaceship', 'assets/textures/ship/bs1_hull.png');
+      this.game.load.image('bullet', 'assets/textures/beam/beam_yellow.png');
       this.game.load.image('screen-howtoplay', 'img/screen-howtoplay.png');
+
       this.game.load.image('game-over', 'img/game-over.png');
-
-      this.game.load.spritesheet('button-start', 'img/button-start.png', 146, 51);
-
-      this.game.load.image('bullet', 'img/bullet.png');
   },
   create: function () {
       this.game.state.start('MainMenu');

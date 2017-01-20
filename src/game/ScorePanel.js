@@ -35,4 +35,4 @@ ScorePanel.prototype.constructor = ScorePanel;
 
 ScorePanel.prototype.updateScoreIndicator = function( value ){
 	this.score_label.text = value;
-}
+};

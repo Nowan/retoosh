@@ -1,6 +1,7 @@
 var Retoosh = {
     WIDTH: 800,
-    HEIGHT: 600
+    HEIGHT: 600,
+    STATS_PANEL_HEIGHT: 10
 };
 
 Retoosh.Boot = function (game) { };
