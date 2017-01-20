@@ -4,6 +4,8 @@ Retoosh.Preloader.prototype = {
   preload: function () {
       this.game.stage.backgroundColor = '#eee';
 
+      this.game.load.audio('maintheme', 'assets/music/space_trip.mp3');
+
       this.game.load.audio('laser_1', 'assets/sounds/laser_1.wav');
       this.game.load.audio('laser_2', 'assets/sounds/laser_2.wav');
       this.game.load.audio('explosion', 'assets/sounds/explosion.wav');
