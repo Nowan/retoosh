@@ -4,6 +4,10 @@ Retoosh.Preloader.prototype = {
   preload: function () {
       this.game.stage.backgroundColor = '#eee';
 
+      this.game.load.audio('laser_1', 'assets/sounds/laser_1.wav');
+      this.game.load.audio('laser_2', 'assets/sounds/laser_2.wav');
+      this.game.load.audio('explosion', 'assets/sounds/explosion.wav');
+
       this.game.load.image('background', 'img/Space.png');
 
       this.game.load.image('easyenemy', 'img/easyEnemy.png');

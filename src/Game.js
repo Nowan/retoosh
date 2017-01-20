@@ -18,12 +18,6 @@ function GameOver(game) {
 }
 Retoosh.Game.prototype = {
 
-    preload: function() {
-        this.game.load.audio('laser_1', 'assets/sounds/laser_1.wav');
-        this.game.load.audio('laser_2', 'assets/sounds/laser_2.wav');
-        this.game.load.audio('explosion', 'assets/sounds/explosion.wav');
-    },
-
     create: function() {
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);

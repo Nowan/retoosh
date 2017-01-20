@@ -59,7 +59,7 @@ Weapon.SingleBullet = function (game) {
 
     this.nextFire = 0;
     this.bulletSpeed = 600;
-    this.fireRate = 100;
+    this.fireRate = 200;
 
     for (var i = 0; i < 64; i++)
     {
@@ -83,7 +83,11 @@ Weapon.SingleBullet.prototype.fire = function (source) {
     this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
 
     this.nextFire = this.game.time.time + this.fireRate;
-
+    
+    var laser_sound = this.game.add.audio('laser_1');
+    laser_sound.volume = this.game.rnd.realInRange(0.4,1);
+    laser_sound.play();
+    laser_sound._sound.playbackRate.value = this.game.rnd.realInRange(0.85,1.15);
 };
 
 Weapon.FrontAndBack = function (game) {
@@ -117,5 +121,4 @@ Weapon.FrontAndBack.prototype.fire = function (source) {
     this.getFirstExists(false).fire(x, y, 180, this.bulletSpeed, 0, 0);
 
     this.nextFire = this.game.time.time + this.fireRate;
-
 };
