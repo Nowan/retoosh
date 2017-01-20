@@ -34,14 +34,13 @@ Retoosh.Game.prototype = {
         this.parallax[2].autoScroll(-180, 0);
 
         // ui
-        this.stats_panel = new StatsPanel(this.game);
+        stats_panel = new StatsPanel(this.game);
 
         var playerName = this.game.cache.getText('name');
         score = 0;
         hp = 100;
         playerNameText=this.game.add.text(10, 10, playerName, { font: '40px Phosphate', fill: '#ffffff' });
         scoreText = this.game.add.text(playerNameText._width + 25, 10, 'score: '+ score, { font: '40px Phosphate', fill: '#ffffff' });
-        hpTest = this.game.add.text(Retoosh.WIDTH - 200, 10, 'HP: '+ hp, { font: '40px Phosphate', fill: '#ffffff' });
 
         this.game.add.text(100, Retoosh.HEIGHT - 30, 'Move: Mouse', { font: '20px Phosphate', fill: '#ffffff' });
         this.game.add.text(300, Retoosh.HEIGHT - 30, 'Fire: Spacebar', { font: '20px Phosphate', fill: '#ffffff' });
@@ -142,5 +141,6 @@ Retoosh.Game.prototype = {
 
 function loseLife() {
     hp -= 5;
-    hpTest.setText('Life: ' + hp);
+
+    stats_panel.updateEnergyIndicator( hp );
 }

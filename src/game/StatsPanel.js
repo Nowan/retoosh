@@ -59,7 +59,24 @@ var StatsPanel = function (game) {
 		sprite.tint = i > 0 ? upgrade_indicator.empty_tint : upgrade_indicator.full_tint;
 		rescale( sprite, scale_factor );
 	}
+
+	this.indicators = {
+		"life": life_indicator,
+		"energy": energy_indicator,
+		"upgrade": upgrade_indicator
+	}
 };
 
 StatsPanel.prototype = Object.create(Phaser.Group.prototype);
 StatsPanel.prototype.constructor = StatsPanel;
+
+StatsPanel.prototype.updateEnergyIndicator = function( value ){
+	var energy_indicator = this.indicators.energy;
+
+	var full_segments = Math.floor(value / 10) + 1;
+
+	for( var i = 1; i < energy_indicator.children.length; i++ ){
+		var sprite = energy_indicator.children[i];
+		sprite.tint = i > full_segments ? energy_indicator.empty_tint : energy_indicator.full_tint;
+	}
+}
