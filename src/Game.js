@@ -14,8 +14,8 @@ var score = 0;
 var hp = 100;
 var shield = false;
 
-function GameOver(game) {
-    game.state.start('GameOver');
+function GameOver(game, has_won) {
+    game.state.start('GameOver', true, false, has_won );
 }
 
 Retoosh.Game.prototype = {
@@ -126,8 +126,8 @@ Retoosh.Game.prototype = {
             }
         }
 
-        if(hp <=0) {
-            GameOver(this.game);
+        if(hp <= 0) {
+            GameOver(this.game, false);
         }
     },
 

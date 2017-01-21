@@ -35,11 +35,11 @@ Retoosh.Preloader.prototype = {
       this.game.load.spritesheet('main_panel_settings', 'assets/textures/main_menu/panel_settings.png', 533, 88);
       this.game.load.spritesheet('main_panel_credits', 'assets/textures/main_menu/panel_credits.png', 533, 78);
 
+      // powerups
       this.game.load.image('poweruplife', 'assets/textures/powerup/powerup_life.png');
       this.game.load.image('powerupenergy', 'assets/textures/powerup/powerup_energy.png');
       this.game.load.image('powerupshield', 'assets/textures/powerup/powerup_shield.png');
       this.game.load.image('powerupupgrade', 'assets/textures/powerup/powerup_upgrade.png');
-
 
       // how-to textures
       this.game.load.image('how_to_move', 'assets/textures/how_to/how_to_move.png');
@@ -52,6 +52,10 @@ Retoosh.Preloader.prototype = {
 
       // effects
       this.game.load.spritesheet('explosion', 'assets/spritesheets/explosion.png', 128, 128);
+
+      // game ending messages
+      this.game.load.image('you_won', 'assets/textures/ending_message/you_won.png');
+      this.game.load.image('game_over', 'assets/textures/ending_message/game_over.png');
 
       this.game.load.image('spaceship', 'assets/textures/ship/bs1_hull.png');
       this.game.load.image('bullet', 'assets/textures/beam/beam_yellow.png');

@@ -45,7 +45,7 @@ Scenario.prototype.updateScenario = function (game) {
 
         if(this.currentStage == this.stages.length){
             // TO DO ---> add end screen;
-            GameOver(game);
+            GameOver(game, true);
         }
         else{
             this.startCurrentStage();
