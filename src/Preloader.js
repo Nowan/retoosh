@@ -39,9 +39,13 @@ Retoosh.Preloader.prototype = {
       this.game.load.image('how_to_move', 'assets/textures/how_to/how_to_move.png');
       this.game.load.image('how_to_fire', 'assets/textures/how_to/how_to_fire.png');
 
+      // ships textures
       this.game.load.image('easyenemy', 'assets/textures/ship/ms1_hull.png');
       this.game.load.image('mediumenemy', 'assets/textures/ship/ms2_hull.png');
       this.game.load.image('hardenemy', 'assets/textures/ship/ss1_hull.png');
+
+      // effects
+      this.game.load.spritesheet('explosion', 'assets/spritesheets/explosion.png', 128, 128);
 
       this.game.load.image('spaceship', 'assets/textures/ship/bs1_hull.png');
       this.game.load.image('bullet', 'assets/textures/beam/beam_yellow.png');

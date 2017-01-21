@@ -82,7 +82,11 @@ Retoosh.Game.prototype = {
             link.playerKillEnemy(link.game, obj1, obj2);
         };
 
-        this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), this.enemyHitPlayer, null, null);
+        var playerColliderCallback = function(obj1, obj2){
+            link.enemyHitPlayer(link.game, obj1, obj2);
+        };
+
+        this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), playerColliderCallback, null, null);
         this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
 
         scenario.updateScenario(this.game);
@@ -99,9 +103,22 @@ Retoosh.Game.prototype = {
         }
     },
 
-    enemyHitPlayer: function (spaceship, enemy) {
+    enemyHitPlayer: function (game, spaceship, enemy) {
 
+        // show explosion in place of killed enemy
+        var explosion = game.add.sprite(enemy.x, enemy.y, 'explosion');
+        explosion.anchor.set( 0.5, 0.5 );
+        explosion.animations.add('explode');
+        explosion.animations.play('explode', 30, false, true);
+
+        // remove enemy sprite
         enemy.kill();
+
+        // play explosion sound with slight change of rate and volume
+        var explosion_sound = this.game.add.audio('explosion');
+        explosion_sound.volume = game.rnd.realInRange(0.4,1);
+        explosion_sound.play();
+        explosion_sound._sound.playbackRate.value = game.rnd.realInRange(0.85,1.15);
 
         score_panel.updateScoreIndicator( score );
         loseLife();
@@ -109,6 +126,13 @@ Retoosh.Game.prototype = {
 
     playerKillEnemy: function (game, enemy, weapon) {
 
+        // show explosion in place of killed enemy
+        var explosion = game.add.sprite(enemy.x, enemy.y, 'explosion');
+        explosion.anchor.set( 0.5, 0.5 );
+        explosion.animations.add('explode');
+        explosion.animations.play('explode', 30, false, true);
+
+        // remove colliding sprites
         enemy.kill();
         weapon.kill();
 
