@@ -7,7 +7,7 @@ var StatsPanel = function (game) {
 		sprite.height *= scale_factor;
 		sprite.x *= scale_factor;
 		sprite.y *= scale_factor;
-	}
+	};
 
 	var background = this.create( 0, 0, 'panel_left' );
 	rescale( background, scale_factor );
