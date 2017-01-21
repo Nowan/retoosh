@@ -40,7 +40,7 @@ Retoosh.Game.prototype = {
         score = 0;
         hp = 100;
         shield = false;
-        
+
         // ui
         stats_panel = new StatsPanel(this.game);
         score_panel = new ScorePanel(this.game, playerName);
@@ -64,7 +64,6 @@ Retoosh.Game.prototype = {
         this.weapons.push(new Weapon.FrontAndBack(this.game));
 
         scenario = new Scenario();
-        scenario.addStage(new Formations.Line(this.game));
         scenario.addStage(new Formations.Square(this.game));
         scenario.addStage(new Formations.FlyingWedge(this.game));
 
@@ -76,6 +75,8 @@ Retoosh.Game.prototype = {
         shieldStartTimestamp = new Date();
         shieldCurrentTimestamp = new Date();
 
+        scenario.addStage(new Formations.Line(this.game));
+        scenario.addStage(new Formations.Boss(this.game));
 
         for (var i = 1; i < this.weapons.length; i++) {
             this.weapons[i].visible = false;
@@ -98,7 +99,7 @@ Retoosh.Game.prototype = {
 
         this.game.physics.arcade.collide(this.spaceship, powerups, this.playerGainPowerup, null, null);
         this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), this.enemyHitPlayer, null, null);
-        this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
+        this.game.physics.arcade.overlap(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
 
         scenario.updateScenario(this.game);
 
@@ -133,6 +134,8 @@ Retoosh.Game.prototype = {
 
         enemy.kill();
 
+        enemy.isHit(10);
+        score-=200;
         score_panel.updateScoreIndicator( score );
         if(!shield) {
             loseLife();
@@ -141,7 +144,7 @@ Retoosh.Game.prototype = {
 
     playerKillEnemy: function (game, enemy, weapon) {
 
-        enemy.kill();
+        enemy.isHit(weapon.damage);
         weapon.kill();
 
         // play explosion sound with slight change of rate and volume
