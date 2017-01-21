@@ -140,7 +140,7 @@ Retoosh.Game.prototype = {
         explosion.animations.play('explode', 30, false, true);
 
         // remove enemy sprite
-        enemy.kill();
+        enemy.isHit(10);
 
         // play explosion sound with slight change of rate and volume
         var explosion_sound = this.game.add.audio('explosion');
@@ -148,7 +148,7 @@ Retoosh.Game.prototype = {
         explosion_sound.play();
         explosion_sound._sound.playbackRate.value = game.rnd.realInRange(0.85,1.15);
 
-        enemy.isHit(10);
+
         score-=200;
         score_panel.updateScoreIndicator( score );
         if(!shield) {
@@ -165,10 +165,10 @@ Retoosh.Game.prototype = {
         explosion.animations.play('explode', 30, false, true);
 
         // remove colliding sprites
-        enemy.kill();
+        enemy.isHit(weapon.damage);
         weapon.kill();
 
-        enemy.isHit(weapon.damage);
+
 
         // play explosion sound with slight change of rate and volume
         var explosion_sound = this.game.add.audio('explosion');
