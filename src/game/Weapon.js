@@ -1,4 +1,4 @@
-var Bullet = function (game, key) {
+var Bullet = function (game, key,damage) {
 
     Phaser.Sprite.call(this, game, 0, 0, key);
 
@@ -12,7 +12,7 @@ var Bullet = function (game, key) {
 
     this.tracking = false;
     this.scaleSpeed = 0;
-
+    this.damage = damage;
     return this;
 };
 
@@ -63,7 +63,7 @@ Weapon.SingleBullet = function (game) {
 
     for (var i = 0; i < 64; i++)
     {
-        this.add(new Bullet(game, 'bullet'), true);
+        this.add(new Bullet(game, 'bullet',10), true);
     }
 
     return this;
@@ -100,7 +100,7 @@ Weapon.FrontAndBack = function (game) {
 
     for (var i = 0; i < 64; i++)
     {
-        this.add(new Bullet(game, 'bullet'), true);
+        this.add(new Bullet(game, 'bullet',5), true);
     }
 
     return this;

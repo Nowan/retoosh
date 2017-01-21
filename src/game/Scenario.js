@@ -2,7 +2,7 @@ var Scenario = function () {
     this.stages = [];
     this.currentStage = 0;
 };
-
+var stop= false;
 Scenario.prototype.constructor = Scenario.constructor;
 
 Scenario.prototype.addStage = function (stage) {
@@ -29,6 +29,7 @@ Scenario.prototype.closeCurrentStage = function () {
     this.stages[this.currentStage].callAll('destroy');
 };
 
+
 Scenario.prototype.updateScenario = function (game) {
     var isEnemyLeft = false;
     this.stages[this.currentStage].forEach(
@@ -43,7 +44,7 @@ Scenario.prototype.updateScenario = function (game) {
         this.currentStage++;
 
         if(this.currentStage == this.stages.length){
-            // TO DO ---> add end screen
+            // TO DO ---> add end screen;
             GameOver(game);
         }
         else{
@@ -55,4 +56,6 @@ Scenario.prototype.updateScenario = function (game) {
         this.stages[this.currentStage].callAll('doBehave');
     }
 };
+
+
 

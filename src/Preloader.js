@@ -57,6 +57,7 @@ Retoosh.Preloader.prototype = {
       this.game.load.image('bullet', 'assets/textures/beam/beam_yellow.png');
       this.game.load.image('screen-howtoplay', 'img/screen-howtoplay.png');
 
+      this.game.load.image('boss', 'assets/textures/ship/bs1_hull.png');
       this.game.load.image('game-over', 'img/game-over.png');
   },
   create: function () {

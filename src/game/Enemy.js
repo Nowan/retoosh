@@ -69,18 +69,33 @@ Formations.Square = function (game){
 Formations.Square.prototype = Object.create(Phaser.Group.prototype);
 Formations.Square.prototype.constructor = Formations.Square;
 
+Formations.Boss = function (game){
+    Phaser.Group.call(this, game, game.world, 'Boss', false, true, Phaser.Physics.ARCADE);
+    //for (var j = 1; j <= Formations.noEnemies; j++) {
+        var boss = new Boss(game, 'boss', Retoosh.WIDTH - 80 - 65, Retoosh.HEIGHT / 2);
+        boss.addBehaviour(new Behaviours.UpAndDown);
+        this.add(boss, true);
+    //}
+    //this.add(boss, true);
+    return this;
+};
 
-Enemy = function (game, key, x, y) {
+Formations.Boss.prototype = Object.create(Phaser.Group.prototype);
+Formations.Boss.prototype.constructor = Formations.Boss;
+
+
+Enemy = function (game, key, x, y,hp) {
 
     Phaser.Sprite.call(this, game, 0, 0, key);
 
     this.anchor.set(0.5);
     this.reset(x, y);
-
+    this.hp = hp;
     this.scaleSpeed = 0;
     this.exists = false;
 
     this.behaviours = [];
+
 
 };
 
@@ -97,11 +112,17 @@ Enemy.prototype.doBehave = function () {
     }
 };
 
-
+Enemy.prototype.isHit = function (weapon) {
+    this.hp-=weapon;
+    if( this.hp <1 )
+    {
+        this.kill();
+    }
+}
 var Enemies = {};
 
 Enemies.Easy = function (game, x, y) {
-    Enemy.call(this, game, 'easyenemy', x, y);
+    Enemy.call(this, game, 'easyenemy', x, y,10);
 };
 
 Enemies.Easy.prototype = Object.create(Enemy.prototype);
@@ -109,14 +130,14 @@ Enemies.Easy.prototype.constructor = Enemies.Easy;
 
 
 Enemies.Medium = function (game, x, y) {
-    Enemy.call(this, game, 'mediumenemy', x, y);
+    Enemy.call(this, game, 'mediumenemy', x, y,20);
 };
 
 Enemies.Medium.prototype = Object.create(Enemy.prototype);
 Enemies.Medium.prototype.constructor = Enemies.Medium;
 
 Enemies.Hard = function (game, x, y) {
-    Enemy.call(this, game, 'hardenemy', x, y);
+    Enemy.call(this, game, 'hardenemy', x, y,30);
 };
 
 Enemies.Hard.prototype = Object.create(Enemy.prototype);
@@ -176,4 +197,15 @@ Behaviours.Chaotic.prototype.behave = function (object) {
     console.log(randomValue);
     object.y += randomValue;
 };
+
+Boss = function (game, key, x, y)
+{
+    Enemy.call(this, game, key, x, y,100);
+    game.physics.enable(this, Phaser.Physics.ARCADE);
+};
+
+Boss.prototype.constructor = Boss;
+Boss.prototype = Object.create(Enemy.prototype);
+
+
 

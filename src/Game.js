@@ -40,7 +40,7 @@ Retoosh.Game.prototype = {
         score = 0;
         hp = 100;
         shield = false;
-        
+
         // ui
         stats_panel = new StatsPanel(this.game);
         score_panel = new ScorePanel(this.game, playerName);
@@ -64,9 +64,10 @@ Retoosh.Game.prototype = {
         this.weapons.push(new Weapon.FrontAndBack(this.game));
 
         scenario = new Scenario();
-        scenario.addStage(new Formations.Line(this.game));
         scenario.addStage(new Formations.Square(this.game));
         scenario.addStage(new Formations.FlyingWedge(this.game));
+        scenario.addStage(new Formations.Line(this.game));
+        scenario.addStage(new Formations.Boss(this.game));
 
         powerups = this.game.add.group();
 
@@ -75,6 +76,7 @@ Retoosh.Game.prototype = {
 
         shieldStartTimestamp = new Date();
         shieldCurrentTimestamp = new Date();
+
 
 
         for (var i = 1; i < this.weapons.length; i++) {
@@ -102,7 +104,7 @@ Retoosh.Game.prototype = {
 
         this.game.physics.arcade.collide(this.spaceship, powerups, this.playerGainPowerup, null, null);
         this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), playerColliderCallback, null, null);
-        this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
+        this.game.physics.arcade.overlap(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
 
         scenario.updateScenario(this.game);
 
@@ -150,6 +152,8 @@ Retoosh.Game.prototype = {
         explosion_sound.play();
         explosion_sound._sound.playbackRate.value = game.rnd.realInRange(0.85,1.15);
 
+        enemy.isHit(10);
+        score-=200;
         score_panel.updateScoreIndicator( score );
         if(!shield) {
             loseLife();
@@ -167,6 +171,8 @@ Retoosh.Game.prototype = {
         // remove colliding sprites
         enemy.kill();
         weapon.kill();
+
+        enemy.isHit(weapon.damage);
 
         // play explosion sound with slight change of rate and volume
         var explosion_sound = this.game.add.audio('explosion');
