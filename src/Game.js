@@ -45,10 +45,6 @@ Retoosh.Game.prototype = {
         stats_panel = new StatsPanel(this.game);
         score_panel = new ScorePanel(this.game, playerName);
 
-        this.game.add.text(100, Retoosh.HEIGHT - 30, 'Move: Mouse', { font: '20px Phosphate', fill: '#ffffff' });
-        this.game.add.text(300, Retoosh.HEIGHT - 30, 'Fire: Spacebar', { font: '20px Phosphate', fill: '#ffffff' });
-        this.game.add.text(500, Retoosh.HEIGHT - 30, 'Weapon change: Enter', { font: '20px Phosphate', fill: '#ffffff' });
-
         shieldText = this.game.add.text(Retoosh.WIDTH/2 - 60, Retoosh.HEIGHT/2 - 30, 'SHIELD!', { font: '40px Phosphate', fill: '#ffffff' });
         shieldText.visible = false;
 
