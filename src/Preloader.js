@@ -35,6 +35,10 @@ Retoosh.Preloader.prototype = {
       this.game.load.spritesheet('main_panel_settings', 'assets/textures/main_menu/panel_settings.png', 533, 88);
       this.game.load.spritesheet('main_panel_credits', 'assets/textures/main_menu/panel_credits.png', 533, 78);
 
+      // how-to textures
+      this.game.load.image('how_to_move', 'assets/textures/how_to/how_to_move.png');
+      this.game.load.image('how_to_fire', 'assets/textures/how_to/how_to_fire.png');
+
       this.game.load.image('easyenemy', 'assets/textures/ship/ms1_hull.png');
       this.game.load.image('mediumenemy', 'assets/textures/ship/ms2_hull.png');
       this.game.load.image('hardenemy', 'assets/textures/ship/ss1_hull.png');
