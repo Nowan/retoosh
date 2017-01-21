@@ -2,20 +2,59 @@ Retoosh.Howto = function(game) { };
 var DEFAULT_VALUE= 'Enter your name';
 Retoosh.Howto.prototype = {
     create: function() {
-        this.myInput = this.createInput(Retoosh.WIDTH * 0.5 - 175, Retoosh.HEIGHT * 0.5 +100);
-        this.buttonContinue = this.add.button(Retoosh.WIDTH * 0.5 - 200, Retoosh.HEIGHT * 0.5 - 100, 'screen-howtoplay', this.startGame, this);
+        // parallax background
+        this.parallax = [
+            this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_1'),
+            this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_2'),
+            this.game.add.tileSprite(0, 0, Retoosh.WIDTH, Retoosh.HEIGHT, 'parallax_3')
+        ];
+
+        this.parallax[0].autoScroll(-10, 0);
+        this.parallax[1].autoScroll(-20, 0);
+        this.parallax[2].autoScroll(-25, 0);
+
+        // "RETOOSH" logo
+        this.logo = this.add.sprite(Retoosh.WIDTH * 0.5, 100, 'logo');
+        this.logo.anchor.set( 0.5, 0 );
+        this.logo.scale.set( 0.7, 0.7 );
+
+        var how_to_play_label = this.add.text(Retoosh.WIDTH * 0.5, 195, 'How to play:', { font: '24px Phosphate', fill: '#15d3e2' });
+        how_to_play_label.anchor.set( 0.5, 0 );
+
+        var press_key_label = this.add.text(Retoosh.WIDTH * 0.5, Retoosh.HEIGHT - 10, '<< press any key to continue >>', { font: '14px Phosphate', fill: '#15d3e2' });
+        press_key_label.anchor.set( 0.5, 1 );
+
+        // instructions
+        var instruction_move = this.add.sprite(Retoosh.WIDTH * 0.5, 250, 'how_to_move');
+        instruction_move.scale.set( 0.6, 0.6 );
+        instruction_move.x -= instruction_move.width + 10;
+
+        var instruction_fire = this.add.sprite(Retoosh.WIDTH * 0.5 + 10, 250, 'how_to_fire');
+        instruction_fire.scale.set( 0.6, 0.6 );
+
+        this.myInput = this.createInput(Retoosh.WIDTH * 0.5 - 175, Retoosh.HEIGHT - 100);
+        
         if(this.game.cache.checkTextKey('name'))
         {
             this.myInput.canvasInput.value(this.game.cache.getText('name'));
         }
+
         var enterKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         enterKey.onDown.add(this.startGame, this);
+
+        this.error_label = this.add.text(this.myInput.x + this.myInput.width - 50, this.myInput.y + 2, '!', { font: '40px Phosphate', fill: '#ff0000' });
+        this.error_label.visible = false;
+
+        this.parallax[2].inputEnabled = true;
+        this.parallax[2].events.onInputDown.add(this.startGame, this);
     },
+
     startGame: function() {
         var name = this.myInput.canvasInput._value;
         if(name == DEFAULT_VALUE || name.trim()=="")
         {
-            this.add.text(Retoosh.WIDTH * 0.5 - 225,  Retoosh.HEIGHT * 0.5-200, 'ENTER NAME!', { font: '75px Phosphate', fill: '#ff0000' });
+            if(!this.error_label.visible)
+                this.error_label.visible = true;
         }
         else
             {
