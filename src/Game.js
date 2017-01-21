@@ -1,5 +1,6 @@
 Retoosh.Game = function(game) {
 
+    this.game = game;
     this.background = null;
 
     this.spaceship = null;
@@ -11,6 +12,7 @@ Retoosh.Game = function(game) {
 
 var score = 0;
 var hp = 100;
+var shield = false;
 
 function GameOver(game) {
     game.state.start('GameOver');
@@ -37,6 +39,7 @@ Retoosh.Game.prototype = {
         var playerName = this.game.cache.getText('name');
         score = 0;
         hp = 100;
+        shield = false;
         
         // ui
         stats_panel = new StatsPanel(this.game);
@@ -45,6 +48,9 @@ Retoosh.Game.prototype = {
         this.game.add.text(100, Retoosh.HEIGHT - 30, 'Move: Mouse', { font: '20px Phosphate', fill: '#ffffff' });
         this.game.add.text(300, Retoosh.HEIGHT - 30, 'Fire: Spacebar', { font: '20px Phosphate', fill: '#ffffff' });
         this.game.add.text(500, Retoosh.HEIGHT - 30, 'Weapon change: Enter', { font: '20px Phosphate', fill: '#ffffff' });
+
+        shieldText = this.game.add.text(Retoosh.WIDTH/2 - 60, Retoosh.HEIGHT/2 - 30, 'SHIELD!', { font: '40px Phosphate', fill: '#ffffff' });
+        shieldText.visible = false;
 
         this.spaceship = this.game.add.sprite(this.game.world.width * 0.5, this.game.world.height * 0.5, 'spaceship');
         this.game.physics.enable(this.spaceship, Phaser.Physics.ARCADE);
@@ -61,6 +67,14 @@ Retoosh.Game.prototype = {
         scenario.addStage(new Formations.Line(this.game));
         scenario.addStage(new Formations.Square(this.game));
         scenario.addStage(new Formations.FlyingWedge(this.game));
+
+        powerups = this.game.add.group();
+
+        previousTimestamp = new Date();
+        currentTimestamp = new Date();
+
+        shieldStartTimestamp = new Date();
+        shieldCurrentTimestamp = new Date();
 
 
         for (var i = 1; i < this.weapons.length; i++) {
@@ -82,6 +96,7 @@ Retoosh.Game.prototype = {
             link.playerKillEnemy(link.game, obj1, obj2);
         };
 
+        this.game.physics.arcade.collide(this.spaceship, powerups, this.playerGainPowerup, null, null);
         this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), this.enemyHitPlayer, null, null);
         this.game.physics.arcade.collide(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
 
@@ -94,6 +109,21 @@ Retoosh.Game.prototype = {
             this.weapons[this.currentWeapon].fire(this.spaceship);
         }
 
+        currentTimestamp = new Date();
+        this.randomPowerup();
+
+        if(shield){
+            shieldCurrentTimestamp = new Date();
+            var shieldTimeDifference = (shieldCurrentTimestamp - shieldStartTimestamp) / 1000;
+            shieldText.visible = true;
+            shieldText.text = "SHIELD " + parseInt(6-shieldTimeDifference) + " sec";
+
+            if( shieldTimeDifference > 5) {
+                shield = false;
+                shieldText.visible = false;
+            }
+        }
+
         if(hp <=0) {
             GameOver(this.game);
         }
@@ -104,7 +134,9 @@ Retoosh.Game.prototype = {
         enemy.kill();
 
         score_panel.updateScoreIndicator( score );
-        loseLife();
+        if(!shield) {
+            loseLife();
+        }
     },
 
     playerKillEnemy: function (game, enemy, weapon) {
@@ -122,6 +154,11 @@ Retoosh.Game.prototype = {
         score_panel.updateScoreIndicator( score );
     },
 
+    playerGainPowerup: function (spaceship, powerup) {
+        powerup.upgrade();
+        powerup.kill();
+    },
+
     nextWeapon: function () {
 
         this.weapons[this.currentWeapon].visible = false;
@@ -135,11 +172,50 @@ Retoosh.Game.prototype = {
         }
 
         this.weapons[this.currentWeapon].visible = true;
+    },
+
+    randomPowerup: function () {
+
+        if((currentTimestamp - previousTimestamp) / 1000 > 2) {
+            var randValue = this.game.rnd.integerInRange(0, 10);
+            if (randValue > 5) {
+                var randX = this.game.rnd.integerInRange(100, Retoosh.WIDTH - 50);
+                var randY = this.game.rnd.integerInRange(50, Retoosh.HEIGHT - 50);
+
+                var powerupRand = this.game.rnd.integerInRange(0, 3);
+
+                if (powerupRand == 0) {
+                    powerups.add(new EnergyPowerup(this.game, randX, randY), true);
+                }
+                else if (powerupRand == 1) {
+                    powerups.add(new LifePowerup(this.game, randX, randY), true);
+                }
+                else if (powerupRand == 2) {
+                    powerups.add(new ShieldPowerup(this.game, randX, randY), true);
+                }
+                else {
+                    powerups.add(new UpgradePowerup(this.game, randX, randY), true);
+                }
+            }
+            previousTimestamp = currentTimestamp;
+        }
     }
 };
 
 function loseLife() {
     hp -= 5;
-
     stats_panel.updateEnergyIndicator( hp );
+}
+
+function increaseLife(value) {
+}
+
+function increaseEnergy(value) {
+    hp += value;
+    stats_panel.updateEnergyIndicator( hp );
+}
+
+function enableShield(){
+    shield = true;
+    shieldStartTimestamp = new Date();
 }
