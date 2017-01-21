@@ -66,6 +66,8 @@ Retoosh.Game.prototype = {
         scenario = new Scenario();
         scenario.addStage(new Formations.Square(this.game));
         scenario.addStage(new Formations.FlyingWedge(this.game));
+        scenario.addStage(new Formations.Line(this.game));
+        scenario.addStage(new Formations.Boss(this.game));
 
         powerups = this.game.add.group();
 
@@ -75,8 +77,7 @@ Retoosh.Game.prototype = {
         shieldStartTimestamp = new Date();
         shieldCurrentTimestamp = new Date();
 
-        scenario.addStage(new Formations.Line(this.game));
-        scenario.addStage(new Formations.Boss(this.game));
+
 
         for (var i = 1; i < this.weapons.length; i++) {
             this.weapons[i].visible = false;
