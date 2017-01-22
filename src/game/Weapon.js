@@ -38,7 +38,6 @@ Bullet.prototype.fireBoss = function (x, y, angle, speed, gx, gy) {
 
     this.reset(x, y);
     this.scale.set(1);
-    var test= this.game.world.getFirstExists(null,null,null,null,'spaceship',null);
     this.rotation = this.game.physics.arcade.moveToObject(this, this.game.world.children[7], speed);
 
 };
