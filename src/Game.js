@@ -148,8 +148,8 @@ Retoosh.Game.prototype = {
         explosion_sound.play();
         explosion_sound._sound.playbackRate.value = game.rnd.realInRange(0.85,1.15);
 
+        shield ? score+=0 : score-=200;
 
-        score-=200;
         score_panel.updateScoreIndicator( score );
         if(!shield) {
             loseLife();

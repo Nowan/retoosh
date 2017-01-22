@@ -19,6 +19,11 @@ Retoosh.GameOver.prototype = {
 
         // ending message
     	var sprite_id = this.has_won ? 'you_won' : 'game_over';
+
+    	var scoreText = this.game.add.text(Retoosh.WIDTH * 0.5 , Retoosh.HEIGHT * 0.5 + 100, 'Your score: ' + score, { font: '40px Phosphate', fill: '#ffffff' });
+    	scoreText.anchor.set(0.5, 0.5);
+        this.has_won ? scoreText.visible = true : scoreText.visible = false;
+
     	var ending_message = this.game.add.sprite(Retoosh.WIDTH * 0.5, Retoosh.HEIGHT * 0.5, sprite_id);
         ending_message.anchor.set( 0.5, 0.5 );
         ending_message.scale.set( 0.7, 0.7 );
