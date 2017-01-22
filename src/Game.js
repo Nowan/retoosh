@@ -48,11 +48,11 @@ Retoosh.Game.prototype = {
         stats_panel = new StatsPanel(this.game);
         score_panel = new ScorePanel(this.game, playerName);
 
-        shieldText = this.game.add.text(Retoosh.WIDTH/2, Retoosh.HEIGHT/2, 'SHIELD!', { font: '40px Phosphate', fill: '#ffffff' });
+        shieldText = this.game.add.text(Retoosh.WIDTH/2, Retoosh.HEIGHT/2, 'SHIELD!', { font: '40px Orbitron', fill: '#ffffff' });
         shieldText.anchor.set(0.5, 0.5);
         shieldText.visible = false;
 
-        newWeaponText = this.game.add.text(Retoosh.WIDTH/2, Retoosh.HEIGHT/2 - 100, 'WEAPON!', { font: '30px Phosphate', fill: '#ffffff' });
+        newWeaponText = this.game.add.text(Retoosh.WIDTH/2, Retoosh.HEIGHT/2 - 100, 'WEAPON!', { font: '30px Orbitron', fill: '#ffffff' });
         newWeaponText.anchor.set(0.5, 0.5);
         newWeaponText.visible = false;
 

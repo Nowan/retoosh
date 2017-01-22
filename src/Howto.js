@@ -18,10 +18,10 @@ Retoosh.Howto.prototype = {
         this.logo.anchor.set( 0.5, 0 );
         this.logo.scale.set( 0.7, 0.7 );
 
-        var how_to_play_label = this.add.text(Retoosh.WIDTH * 0.5, 195, 'How to play:', { font: '24px Phosphate', fill: '#15d3e2' });
+        var how_to_play_label = this.add.text(Retoosh.WIDTH * 0.5, 195, 'How to play', { font: '18px Orbitron', fill: '#15d3e2' });
         how_to_play_label.anchor.set( 0.5, 0 );
 
-        var press_key_label = this.add.text(Retoosh.WIDTH * 0.5, Retoosh.HEIGHT - 10, '<< press any key to continue >>', { font: '14px Phosphate', fill: '#15d3e2' });
+        var press_key_label = this.add.text(Retoosh.WIDTH * 0.5, Retoosh.HEIGHT - 10, '<< press any key to continue >>', { font: '12px Orbitron', fill: '#15d3e2' });
         press_key_label.anchor.set( 0.5, 1 );
 
         // instructions

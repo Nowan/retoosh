@@ -8,7 +8,7 @@ var ScorePanel = function ( game, player_name ) {
 	background.height *= scale_factor;
 
 	var name_label = game.add.text(0, 0, player_name, { 
-		font: '20px Phosphate', 
+		font: '17px Orbitron', 
 		fill: '#540b4e'
 	});
 	name_label.anchor = { x: 1, y: 0.5 };
@@ -17,7 +17,7 @@ var ScorePanel = function ( game, player_name ) {
 	this.add(name_label);
 
 	var score_label = game.add.text(0, 0, '0', { 
-		font: '20px Phosphate', 
+		font: '15px Orbitron', 
 		fill: '#781270'
 	});
 	score_label.anchor = { x: 0.5, y: 0.5 };

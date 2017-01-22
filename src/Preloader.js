@@ -63,8 +63,17 @@ Retoosh.Preloader.prototype = {
 
       this.game.load.image('boss', 'assets/textures/ship/boss_hull.png');
       this.game.load.image('game-over', 'img/game-over.png');
+
+      this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
   },
   create: function () {
       this.game.state.start('MainMenu');
   }
+};
+
+WebFontConfig = {
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Orbitron']
+    }
 };

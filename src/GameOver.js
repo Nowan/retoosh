@@ -20,7 +20,7 @@ Retoosh.GameOver.prototype = {
         // ending message
     	var sprite_id = this.has_won ? 'you_won' : 'game_over';
 
-    	var scoreText = this.game.add.text(Retoosh.WIDTH * 0.5 , Retoosh.HEIGHT * 0.5 + 100, 'Your score: ' + score, { font: '40px Phosphate', fill: '#ffffff' });
+    	var scoreText = this.game.add.text(Retoosh.WIDTH * 0.5 , Retoosh.HEIGHT * 0.5 + 80, 'Your score: ' + score, { font: '30px Orbitron', fill: '#15d3e2' });
     	scoreText.anchor.set(0.5, 0.5);
         this.has_won ? scoreText.visible = true : scoreText.visible = false;
 
