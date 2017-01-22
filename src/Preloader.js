@@ -57,11 +57,11 @@ Retoosh.Preloader.prototype = {
       this.game.load.image('you_won', 'assets/textures/ending_message/you_won.png');
       this.game.load.image('game_over', 'assets/textures/ending_message/game_over.png');
 
-      this.game.load.image('spaceship', 'assets/textures/ship/bs1_hull.png');
+      this.game.load.image('spaceship', 'assets/textures/ship/player_hull.png');
       this.game.load.image('bullet', 'assets/textures/beam/beam_yellow.png');
       this.game.load.image('screen-howtoplay', 'img/screen-howtoplay.png');
 
-      this.game.load.image('boss', 'assets/textures/ship/bs1_hull.png');
+      this.game.load.image('boss', 'assets/textures/ship/boss_hull.png');
       this.game.load.image('game-over', 'img/game-over.png');
   },
   create: function () {
