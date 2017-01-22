@@ -45,5 +45,5 @@ UpgradePowerup = function (game, x , y) {
 UpgradePowerup.prototype = Object.create(Powerup.prototype);
 UpgradePowerup.prototype.constructor = UpgradePowerup;
 UpgradePowerup.prototype.upgrade = function () {
-
+    upgradeWeapon();
 };

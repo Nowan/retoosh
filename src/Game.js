@@ -10,9 +10,12 @@ Retoosh.Game = function(game) {
     this.currentWeapon = 0;
 };
 
+var weaponsLimit = 0;
+var weaponsAvailable = 0;
 var score = 0;
 var hp = 100;
 var shield = false;
+var newWeapon = false;
 
 function GameOver(game, has_won) {
     game.state.start('GameOver', true, false, has_won );
@@ -45,8 +48,13 @@ Retoosh.Game.prototype = {
         stats_panel = new StatsPanel(this.game);
         score_panel = new ScorePanel(this.game, playerName);
 
-        shieldText = this.game.add.text(Retoosh.WIDTH/2 - 60, Retoosh.HEIGHT/2 - 30, 'SHIELD!', { font: '40px Phosphate', fill: '#ffffff' });
+        shieldText = this.game.add.text(Retoosh.WIDTH/2, Retoosh.HEIGHT/2, 'SHIELD!', { font: '40px Phosphate', fill: '#ffffff' });
+        shieldText.anchor.set(0.5, 0.5);
         shieldText.visible = false;
+
+        newWeaponText = this.game.add.text(Retoosh.WIDTH/2, Retoosh.HEIGHT/2 - 100, 'WEAPON!', { font: '30px Phosphate', fill: '#ffffff' });
+        newWeaponText.anchor.set(0.5, 0.5);
+        newWeaponText.visible = false;
 
         this.spaceship = this.game.add.sprite(this.game.world.width * 0.5, this.game.world.height * 0.5, 'spaceship');
         this.game.physics.enable(this.spaceship, Phaser.Physics.ARCADE);
@@ -63,6 +71,9 @@ Retoosh.Game.prototype = {
         this.weapons.push(new Weapon.ScatterShot(this.game));
         this.weapons.push(new Weapon.ScaleBullet(this.game));
 
+        weaponsAvailable = 1;
+        weaponsLimit = this.weapons.length;
+
         scenario = new Scenario();
         scenario.addStage(new Formations.Square(this.game));
         scenario.addStage(new Formations.FlyingWedge(this.game));
@@ -77,7 +88,7 @@ Retoosh.Game.prototype = {
         shieldStartTimestamp = new Date();
         shieldCurrentTimestamp = new Date();
 
-
+        newWeaponTimestamp = new Date();
 
         for (var i = 1; i < this.weapons.length; i++) {
             this.weapons[i].visible = false;
@@ -130,6 +141,18 @@ Retoosh.Game.prototype = {
             }
         }
 
+        if(newWeapon){
+
+            var newWeaponTimeDifference = (currentTimestamp - newWeaponTimestamp) / 1000;
+            newWeaponText.visible = true;
+            newWeaponText.text = 'New weapon available!\nPress enter to change the weapon!';
+
+            if( newWeaponTimeDifference > 3) {
+                newWeapon = false;
+                newWeaponText.visible = false;
+            }
+        }
+
         if(hp <= 0) {
             GameOver(this.game, false);
         }
@@ -172,8 +195,6 @@ Retoosh.Game.prototype = {
         enemy.isHit(weapon.damage);
         weapon.kill();
 
-
-
         // play explosion sound with slight change of rate and volume
         var explosion_sound = this.game.add.audio('explosion');
         explosion_sound.volume = game.rnd.realInRange(0.4,1);
@@ -196,10 +217,7 @@ Retoosh.Game.prototype = {
         this.weapons[this.currentWeapon].setAll('exists', false);
 
         this.currentWeapon++;
-
-        if (this.currentWeapon === this.weapons.length) {
-            this.currentWeapon = 0;
-        }
+        this.currentWeapon = this.currentWeapon % weaponsAvailable;
 
         this.weapons[this.currentWeapon].visible = true;
     },
@@ -248,4 +266,10 @@ function increaseEnergy(value) {
 function enableShield(){
     shield = true;
     shieldStartTimestamp = new Date();
+}
+
+function upgradeWeapon(){
+    newWeapon = true;
+    weaponsAvailable < weaponsLimit ? weaponsAvailable++ : weaponsAvailable;
+    newWeaponTimestamp = new Date();
 }
