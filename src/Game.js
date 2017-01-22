@@ -43,7 +43,7 @@ Retoosh.Game.prototype = {
         score = 0;
         hp = 100;
         shield = false;
-
+        this.currentWeapon = 0;
         // ui
         stats_panel = new StatsPanel(this.game);
         score_panel = new ScorePanel(this.game, playerName);
@@ -94,8 +94,6 @@ Retoosh.Game.prototype = {
             this.weapons[i].visible = false;
         }
 
-        this.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
-
         var changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         changeKey.onDown.add(this.nextWeapon, this);
 
@@ -127,14 +125,12 @@ Retoosh.Game.prototype = {
             weaponEnemy = enemyKind.getWeapon();
             this.game.physics.arcade.overlap(this.spaceship, weaponEnemy, enemyShotPlayerCallback, null, null);
         }
-        //this.weapons[this.currentWeapon].rotation=  this.game.physics.arcade.moveToObject(this.weapons[this.currentWeapon], scenario.getEnemies(), 500);
-
         scenario.updateScenario(this.game);
 
         this.spaceship.x = this.game.input.x || this.game.world.width * 0.5;
         this.spaceship.y = this.game.input.y || this.game.world.height * 0.5;
 
-        if (this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || this.input.activePointer.leftButton.isDown) {
+        if (this.input.activePointer.leftButton.isDown) {
             this.weapons[this.currentWeapon].fire(this.spaceship);
         }
 
@@ -181,7 +177,7 @@ Retoosh.Game.prototype = {
         // remove enemy sprite
         if(!isShot)
         {
-            enemy.isHit(10);
+            enemy.isHit(5);
         }
         else
         {
