@@ -58,6 +58,10 @@ Retoosh.Game.prototype = {
         this.weapons = [];
         this.weapons.push(new Weapon.SingleBullet(this.game));
         this.weapons.push(new Weapon.FrontAndBack(this.game));
+        this.weapons.push(new Weapon.ThreeWay(this.game));
+        this.weapons.push(new Weapon.EightWay(this.game));
+        this.weapons.push(new Weapon.ScatterShot(this.game));
+        this.weapons.push(new Weapon.ScaleBullet(this.game));
 
         scenario = new Scenario();
         scenario.addStage(new Formations.Square(this.game));
