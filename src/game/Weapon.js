@@ -3,7 +3,7 @@ var Bullet = function (game, key,damage) {
     Phaser.Sprite.call(this, game, 0, 0, key);
 
     this.texture.baseTexture.scaleMode = PIXI.scaleModes.NEAREST;
-
+    this.enableBody = true;
     this.anchor.set(0.5);
 
     this.checkWorldBounds = true;
@@ -32,6 +32,14 @@ Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
     this.angle = angle;
 
     this.body.gravity.set(gx, gy);
+
+};
+Bullet.prototype.fireBoss = function (x, y, angle, speed, gx, gy) {
+
+    this.reset(x, y);
+    this.scale.set(1);
+    var test= this.game.world.getFirstExists(null,null,null,null,'spaceship',null);
+    this.rotation = this.game.physics.arcade.moveToObject(this, this.game.world.children[7], speed);
 
 };
 
@@ -89,7 +97,22 @@ Weapon.SingleBullet.prototype.fire = function (source) {
     laser_sound.play();
     laser_sound._sound.playbackRate.value = this.game.rnd.realInRange(0.85,1.15);
 };
+Weapon.SingleBullet.prototype.fireBoss = function (source) {
 
+    if (this.game.time.time < this.nextFire) { return; }
+
+    var x = source.x + 10;
+    var y = source.y;
+
+    this.getFirstExists(false).fireBoss(x, y, 0, this.bulletSpeed -300, 0, 0);
+
+    this.nextFire = this.game.time.time + this.fireRate +500;
+
+    var laser_sound = this.game.add.audio('laser_1');
+    laser_sound.volume = this.game.rnd.realInRange(0.4,1);
+    laser_sound.play();
+    laser_sound._sound.playbackRate.value = this.game.rnd.realInRange(0.85,1.15);
+};
 Weapon.FrontAndBack = function (game) {
 
     Phaser.Group.call(this, game, game.world, 'Front And Back', false, true, Phaser.Physics.ARCADE);

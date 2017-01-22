@@ -73,7 +73,8 @@ Formations.Boss = function (game){
     Phaser.Group.call(this, game, game.world, 'Boss', false, true, Phaser.Physics.ARCADE);
     //for (var j = 1; j <= Formations.noEnemies; j++) {
         var boss = new Boss(game, 'boss', Retoosh.WIDTH - 80 - 65, Retoosh.HEIGHT / 2);
-        boss.addBehaviour(new Behaviours.UpAndDown);
+        boss.addBehaviour(new Behaviours.Chaotic);
+        boss.addBehaviour(new Behaviours.Fire);
         this.add(boss, true);
     //}
     //this.add(boss, true);
@@ -198,14 +199,31 @@ Behaviours.Chaotic.prototype.behave = function (object) {
     object.y += randomValue;
 };
 
+Behaviours.Fire = function () {
+    Behaviours.call(this);
+};
+
+Behaviours.Fire.prototype = Object.create(Behaviours.prototype);
+Behaviours.Fire.prototype.constructor = Behaviours.Chaotic;
+
+Behaviours.Fire.prototype.behave = function (object) {
+
+    object.weapons[0].fireBoss(object);
+};
+
 Boss = function (game, key, x, y)
 {
     Enemy.call(this, game, key, x, y,100);
     game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.weapons = [];
+    this.weapons.push(new Weapon.SingleBullet(this.game));
 };
 
 Boss.prototype.constructor = Boss;
 Boss.prototype = Object.create(Enemy.prototype);
+Boss.prototype.getWeapon =  function () {
+    return this.weapons[0];
+}
 
 
 

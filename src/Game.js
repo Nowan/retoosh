@@ -110,12 +110,24 @@ Retoosh.Game.prototype = {
         };
 
         var playerColliderCallback = function(obj1, obj2){
-            link.enemyHitPlayer(link.game, obj1, obj2);
+            link.enemyHitPlayer(link.game, obj1, obj2,false);
+        };
+        var enemyShotPlayerCallback = function(obj1, obj2){
+            link.enemyHitPlayer(link.game, obj1, obj2,true);
         };
 
+        var enemy = scenario.getEnemies();
+        var enemyKind= enemy.getFirstExists();
+
         this.game.physics.arcade.collide(this.spaceship, powerups, this.playerGainPowerup, null, null);
-        this.game.physics.arcade.collide(this.spaceship, scenario.getEnemies(), playerColliderCallback, null, null);
-        this.game.physics.arcade.overlap(scenario.getEnemies(), this.weapons[this.currentWeapon], beamColliderCallback, null, null);
+        this.game.physics.arcade.collide(this.spaceship, enemy, playerColliderCallback, null, null);
+        this.game.physics.arcade.overlap(enemy, this.weapons[this.currentWeapon], beamColliderCallback, null, null);
+        if(enemyKind!= null && enemyKind.key=='boss')
+        {
+            weaponEnemy = enemyKind.getWeapon();
+            this.game.physics.arcade.overlap(this.spaceship, weaponEnemy, enemyShotPlayerCallback, null, null);
+        }
+        //this.weapons[this.currentWeapon].rotation=  this.game.physics.arcade.moveToObject(this.weapons[this.currentWeapon], scenario.getEnemies(), 500);
 
         scenario.updateScenario(this.game);
 
@@ -158,16 +170,25 @@ Retoosh.Game.prototype = {
         }
     },
 
-    enemyHitPlayer: function (game, spaceship, enemy) {
+    enemyHitPlayer: function (game, spaceship, enemy,isShot) {
 
         // show explosion in place of killed enemy
         var explosion = game.add.sprite(enemy.x, enemy.y, 'explosion');
         explosion.anchor.set( 0.5, 0.5 );
         explosion.animations.add('explode');
         explosion.animations.play('explode', 30, false, true);
-
+        var dmg= 5;
         // remove enemy sprite
-        enemy.isHit(10);
+        if(!isShot)
+        {
+            enemy.isHit(10);
+        }
+        else
+        {
+            enemy.kill();
+            dmg=15;
+        }
+
 
         // play explosion sound with slight change of rate and volume
         var explosion_sound = this.game.add.audio('explosion');
@@ -179,7 +200,7 @@ Retoosh.Game.prototype = {
 
         score_panel.updateScoreIndicator( score );
         if(!shield) {
-            loseLife();
+            loseLife(dmg);
         }
     },
 
@@ -250,8 +271,8 @@ Retoosh.Game.prototype = {
     }
 };
 
-function loseLife() {
-    hp -= 5;
+function loseLife(dmg) {
+    hp -= dmg;
     stats_panel.updateEnergyIndicator( hp );
 }
 
