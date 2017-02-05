@@ -59,7 +59,6 @@ Retoosh.Howto.prototype = {
         else
             {
                 this.game.cache.addText('name',name,name);
-                console.log(this.game.cache.getText('name'));
                 this.game.state.start('Game');
             }
 
