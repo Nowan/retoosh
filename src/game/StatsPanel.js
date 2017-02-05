@@ -50,7 +50,7 @@ var StatsPanel = function (game) {
 	upgrade_indicator.empty_tint = 0x5e5125;
 	
 	upgrade_indicator.create( 240, 8, 'upgrade_indicator' );
-	for( var i = 0; i < 4; i++ ){
+	for( var i = 0; i < 5; i++ ){
 		upgrade_indicator.create( 258 + i * 8, 8, 'upgrade_segment' );
 	}
 
