@@ -11,7 +11,10 @@ Retoosh.Game = function(game) {
 };
 
 var weaponsLimit = 0;
+var lifesLimit = 3;
+
 var weaponsAvailable = 0;
+var lifes = 3;
 var score = 0;
 var hp = 100;
 var shield = false;
@@ -88,6 +91,8 @@ Retoosh.Game.prototype = {
         }
 
         scenario.startScenario();
+
+        stats_panel.updateLifeIndicator(lifes);
     },
 
     update: function() {
@@ -140,7 +145,15 @@ Retoosh.Game.prototype = {
         }
 
         if(hp <= 0) {
-            GameOver(this.game, false);
+            if(lifes <= 0)
+                GameOver(this.game, false);
+            else{
+                lifes--;
+                hp = 100;
+
+                stats_panel.updateLifeIndicator(lifes);
+                stats_panel.updateEnergyIndicator(hp);
+            }
         }
     },
 
