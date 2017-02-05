@@ -71,13 +71,12 @@ Formations.Square.prototype.constructor = Formations.Square;
 
 Formations.Boss = function (game){
     Phaser.Group.call(this, game, game.world, 'Boss', false, true, Phaser.Physics.ARCADE);
-    //for (var j = 1; j <= Formations.noEnemies; j++) {
-        var boss = new Boss(game, 'boss', Retoosh.WIDTH - 80 - 65, Retoosh.HEIGHT / 2);
-        boss.addBehaviour(new Behaviours.Chaotic);
-        boss.addBehaviour(new Behaviours.Fire);
-        this.add(boss, true);
-    //}
-    //this.add(boss, true);
+
+    var boss = new Boss(game, 'boss', Retoosh.WIDTH - 80 - 65, Retoosh.HEIGHT / 2);
+    boss.addBehaviour(new Behaviours.Chaotic);
+    boss.addBehaviour(new Behaviours.Fire);
+    this.add(boss, true);
+
     return this;
 };
 
@@ -96,8 +95,6 @@ Enemy = function (game, key, x, y,hp) {
     this.exists = false;
 
     this.behaviours = [];
-
-
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -119,7 +116,7 @@ Enemy.prototype.isHit = function (weapon) {
     {
         this.kill();
     }
-}
+};
 var Enemies = {};
 
 Enemies.Easy = function (game, x, y) {
@@ -193,10 +190,7 @@ Behaviours.Chaotic.prototype = Object.create(Behaviours.prototype);
 Behaviours.Chaotic.prototype.constructor = Behaviours.Chaotic;
 
 Behaviours.Chaotic.prototype.behave = function (object) {
-
-    var randomValue = Math.floor(Math.random() * (5 + 5 + 1)) - 5;
-    console.log(randomValue);
-    object.y += randomValue;
+    object.y += Math.floor(Math.random() * (5 + 5 + 1)) - 5;
 };
 
 Behaviours.Fire = function () {
@@ -223,7 +217,7 @@ Boss.prototype.constructor = Boss;
 Boss.prototype = Object.create(Enemy.prototype);
 Boss.prototype.getWeapon =  function () {
     return this.weapons[0];
-}
+};
 
 
 
