@@ -103,9 +103,9 @@ Weapon.SingleBullet.prototype.fireBoss = function (source) {
     var x = source.x + 10;
     var y = source.y;
 
-    this.getFirstExists(false).fireBoss(x, y, 0, this.bulletSpeed -300, 0, 0);
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed * -1, 0, 0);
 
-    this.nextFire = this.game.time.time + this.fireRate +500;
+    this.nextFire = this.game.time.time + this.fireRate;
 
     var laser_sound = this.game.add.audio('laser_1');
     laser_sound.volume = this.game.rnd.realInRange(0.4,1);

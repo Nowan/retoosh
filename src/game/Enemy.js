@@ -207,7 +207,7 @@ Behaviours.Fire.prototype.behave = function (object) {
 
 Boss = function (game, key, x, y)
 {
-    Enemy.call(this, game, key, x, y,100);
+    Enemy.call(this, game, key, x, y, 300);
     game.physics.enable(this, Phaser.Physics.ARCADE);
     this.weapons = [];
     this.weapons.push(new Weapon.SingleBullet(this.game));
