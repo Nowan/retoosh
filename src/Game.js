@@ -209,6 +209,7 @@ Retoosh.Game.prototype = {
     },
 
     nextWeapon: function () {
+        if(this.currentWeapon >= weaponsLimit - 1) return;
 
         this.weapons[this.currentWeapon].visible = false;
         this.weapons[this.currentWeapon].callAll('reset', null, 0, 0);
@@ -268,4 +269,5 @@ function enableShield(){
 
 function upgradeWeapon(){
     weaponsAvailable < weaponsLimit ? weaponsAvailable++ : weaponsAvailable;
+    stats_panel.updateUpgradeIndicator(weaponsAvailable);
 }
