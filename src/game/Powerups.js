@@ -14,6 +14,7 @@ Powerup.prototype.upgrade = function () { };
 
 EnergyPowerup = function (game, x, y) {
     Powerup.call(this, game, 'powerupenergy', x, y);
+    this.type = "energy";
 };
 EnergyPowerup.prototype = Object.create(Powerup.prototype);
 EnergyPowerup.prototype.constructor = EnergyPowerup;
@@ -28,10 +29,12 @@ LifePowerup.prototype = Object.create(Powerup.prototype);
 LifePowerup.prototype.constructor = LifePowerup;
 LifePowerup.prototype.upgrade = function () {
     increaseEnergy(20);
+    this.type = "life";
 };
 
 ShieldPowerup = function (game, x, y) {
     Powerup.call(this, game, 'powerupshield', x, y);
+    this.type = "shield";
 };
 ShieldPowerup.prototype = Object.create(Powerup.prototype);
 ShieldPowerup.prototype.constructor = ShieldPowerup;
@@ -41,6 +44,7 @@ ShieldPowerup.prototype.upgrade = function (){
 
 UpgradePowerup = function (game, x , y) {
     Powerup.call(this, game, 'powerupupgrade', x, y);
+    this.type = "upgrade";
 };
 UpgradePowerup.prototype = Object.create(Powerup.prototype);
 UpgradePowerup.prototype.constructor = UpgradePowerup;

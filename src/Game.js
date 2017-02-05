@@ -15,7 +15,6 @@ var weaponsAvailable = 0;
 var score = 0;
 var hp = 100;
 var shield = false;
-var newWeapon = false;
 
 function GameOver(game, has_won) {
     game.state.start('GameOver', true, false, has_won );
@@ -52,10 +51,6 @@ Retoosh.Game.prototype = {
         shieldText.anchor.set(0.5, 0.5);
         shieldText.visible = false;
 
-        newWeaponText = this.game.add.text(Retoosh.WIDTH/2, Retoosh.HEIGHT/2 - 100, 'WEAPON!', { font: '30px Orbitron', fill: '#ffffff' });
-        newWeaponText.anchor.set(0.5, 0.5);
-        newWeaponText.visible = false;
-
         this.spaceship = this.game.add.sprite(this.game.world.width * 0.5, this.game.world.height * 0.5, 'spaceship');
         this.game.physics.enable(this.spaceship, Phaser.Physics.ARCADE);
         this.spaceship.anchor.set(0.5, 0.5);
@@ -88,14 +83,9 @@ Retoosh.Game.prototype = {
         shieldStartTimestamp = new Date();
         shieldCurrentTimestamp = new Date();
 
-        newWeaponTimestamp = new Date();
-
         for (var i = 1; i < this.weapons.length; i++) {
             this.weapons[i].visible = false;
         }
-
-        var changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-        changeKey.onDown.add(this.nextWeapon, this);
 
         scenario.startScenario();
     },
@@ -117,7 +107,7 @@ Retoosh.Game.prototype = {
         var enemy = scenario.getEnemies();
         var enemyKind= enemy.getFirstExists();
 
-        this.game.physics.arcade.collide(this.spaceship, powerups, this.playerGainPowerup, null, null);
+        this.game.physics.arcade.collide(this.spaceship, powerups, this.playerGainPowerup, null, this);
         this.game.physics.arcade.collide(this.spaceship, enemy, playerColliderCallback, null, null);
         this.game.physics.arcade.overlap(enemy, this.weapons[this.currentWeapon], beamColliderCallback, null, null);
         if(enemyKind!= null && enemyKind.key=='boss')
@@ -146,18 +136,6 @@ Retoosh.Game.prototype = {
             if( shieldTimeDifference > 5) {
                 shield = false;
                 shieldText.visible = false;
-            }
-        }
-
-        if(newWeapon){
-
-            var newWeaponTimeDifference = (currentTimestamp - newWeaponTimestamp) / 1000;
-            newWeaponText.visible = true;
-            newWeaponText.text = 'New weapon available!\nPress enter to change the weapon!';
-
-            if( newWeaponTimeDifference > 3) {
-                newWeapon = false;
-                newWeaponText.visible = false;
             }
         }
 
@@ -225,6 +203,9 @@ Retoosh.Game.prototype = {
     playerGainPowerup: function (spaceship, powerup) {
         powerup.upgrade();
         powerup.kill();
+
+        if(powerup.type == "upgrade")
+            this.nextWeapon();
     },
 
     nextWeapon: function () {
@@ -286,7 +267,5 @@ function enableShield(){
 }
 
 function upgradeWeapon(){
-    newWeapon = true;
     weaponsAvailable < weaponsLimit ? weaponsAvailable++ : weaponsAvailable;
-    newWeaponTimestamp = new Date();
 }
