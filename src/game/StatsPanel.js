@@ -80,3 +80,25 @@ StatsPanel.prototype.updateEnergyIndicator = function( value ){
 		sprite.tint = i > full_segments ? energy_indicator.empty_tint : energy_indicator.full_tint;
 	}
 }
+
+StatsPanel.prototype.updateLifeIndicator = function( value ){
+	var life_indicator = this.indicators.life;
+
+	var full_segments = value;
+
+	for( var i = 0; i < life_indicator.children.length; i++ ){
+		var sprite = life_indicator.children[i];
+		sprite.tint = i >= full_segments ? life_indicator.empty_tint : life_indicator.full_tint;
+	}
+}
+
+StatsPanel.prototype.updateUpgradeIndicator = function( value ){
+	var upgrade_indicator = this.indicators.upgrade;
+
+	var full_segments = value;
+
+	for( var i = 0; i < upgrade_indicator.children.length; i++ ){
+		var sprite = upgrade_indicator.children[i];
+		sprite.tint = i >= full_segments ? upgrade_indicator.empty_tint : upgrade_indicator.full_tint;
+	}
+}
